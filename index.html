@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>За моята любима</title>
+
+  <!-- Красив, нежен "handwriting" шрифт + читим основен шрифт -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --rose-pale: #ffe6f2;
+      --rose-soft: #ffd1e8;
+      --rose-ink:  #f48fb1;   /* розов контур на мотивите */
+      --glass: rgba(255,255,255,0.6);
+      --text: #5c3454;
+    }
+
+    /* Нежен розов градиент + вграден повтарящ се SVG с рози */
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        linear-gradient(135deg, var(--rose-pale) 0%, var(--rose-soft) 100%);
+      /* слой с лек „блясък“ */
+      background-attachment: fixed;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    /* Розов мотив (вграден SVG като втори фон) */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none; z-index:-1;
+      background-image:
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 60 60"><g fill="none" stroke="%23f48fb1" stroke-width="1.3" stroke-opacity="0.35"><path d="M30 10c6 5 9 9 9 14 0 7-5 12-9 12s-9-5-9-12c0-5 3-9 9-14z"/><path d="M21 24c3-3 6-4 9-4s6 1 9 4"/><path d="M19 40c4 3 8 5 11 5s7-2 11-5"/></g></svg>');
+      background-size: 140px 140px;
+      opacity: .55;
+    }
+
+    /* Центрирана „картичка“ */
+    .wrap{
+      min-height: 100svh; /* по-добра мобилна височина */
+      display:grid;
+      place-items:center;
+      padding: clamp(16px, 4vw, 40px);
+    }
+
+    .card{
+      width:min(860px, 100%);
+      padding: clamp(20px, 5vw, 56px);
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 22px;
+      box-shadow:
+        0 10px 30px rgba(244, 143, 177, 0.25),
+        inset 0 1px 0 rgba(255,255,255,.5);
+      backdrop-filter: blur(8px);
+    }
+
+    h1{
+      font-family: "Great Vibes", cursive;
+      font-weight: 400;
+      font-size: clamp(44px, 9vw, 90px);
+      line-height: 1.05;
+      margin: 0 0 .3em 0;
+      color:#9c3a6a;
+      text-shadow: 0 2px 8px rgba(255,255,255,.6);
+      letter-spacing: .5px;
+    }
+
+    .subtitle{
+      font-weight: 600;
+      opacity:.75;
+      margin-top:-.4em;
+      margin-bottom: 1.2em;
+    }
+
+    p{
+      font-size: clamp(18px, 2.4vw, 22px);
+      line-height: 1.8;
+      margin: 0 0 1.1em 0;
+    }
+
+    .signature{
+      margin-top:1.6em;
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(36px, 7vw, 56px);
+      color:#8a2f5e;
+    }
+
+    /* Малко „магия“: нежно падащи листенца (чист CSS) */
+    .petals{
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .petal{
+      position:absolute; top:-10vh;
+      width:14px; height:14px;
+      border-radius: 100% 70% 100% 70%;
+      background: rgba(244, 143, 177, .45);
+      filter: blur(.2px);
+      animation: fall linear infinite;
+    }
+    @keyframes fall{
+      0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: .8; }
+      100% { transform: translateY(110vh) translateX(30vw) rotate(360deg); opacity: 0; }
+    }
+    /* Различни траектории/забавяния, за да изглежда естествено */
+    .petal:nth-child(odd){ background: rgba(244, 143, 177, .6); }
+    .petal:nth-child(3n){ width:10px; height:10px; opacity:.7; }
+    .petal:nth-child(5n){ width:18px; height:18px; filter: blur(.6px); }
+    /* Разхвърляни позиции и време */
+    /* Генеративно правило: 18 листенца с различни delays/durations/left */
+    /* Можеш да увеличиш броя, ако искаш повече листенца */
+    /* Ще настроим 18 ръчно за по-добра съвместимост */
+    .petal:nth-child(1){ left:3vw; animation-duration: 12s; animation-delay: 0s;}
+    .petal:nth-child(2){ left:12vw; animation-duration: 14s; animation-delay: 2s;}
+    .petal:nth-child(3){ left:21vw; animation-duration: 16s; animation-delay: 4s;}
+    .petal:nth-child(4){ left:30vw; animation-duration: 13s; animation-delay: 1s;}
+    .petal:nth-child(5){ left:39vw; animation-duration: 15s; animation-delay: 3s;}
+    .petal:nth-child(6){ left:48vw; animation-duration: 17s; animation-delay: 5s;}
+    .petal:nth-child(7){ left:57vw; animation-duration: 12s; animation-delay: 1.5s;}
+    .petal:nth-child(8){ left:66vw; animation-duration: 14s; animation-delay: 2.5s;}
+    .petal:nth-child(9){ left:75vw; animation-duration: 16s; animation-delay: 3.5s;}
+    .petal:nth-child(10){ left:84vw; animation-duration: 13s; animation-delay: 0.8s;}
+    .petal:nth-child(11){ left:8vw; animation-duration: 18s; animation-delay: 1.2s;}
+    .petal:nth-child(12){ left:26vw; animation-duration: 19s; animation-delay: 2.2s;}
+    .petal:nth-child(13){ left:44vw; animation-duration: 20s; animation-delay: 3.2s;}
+    .petal:nth-child(14){ left:62vw; animation-duration: 18s; animation-delay: 4.2s;}
+    .petal:nth-child(15){ left:80vw; animation-duration: 16s; animation-delay: 5.2s;}
+    .petal:nth-child(16){ left:10vw; animation-duration: 22s; animation-delay: 1.8s;}
+    .petal:nth-child(17){ left:52vw; animation-duration: 21s; animation-delay: 2.8s;}
+    .petal:nth-child(18){ left:90vw; animation-duration: 23s; animation-delay: 3.8s;}
+
+    /* Малък бутон ако искаш линк към нещо (по желание) */
+    .btn{
+      display:inline-block; margin-top:.6em;
+      padding:.7em 1.1em; border-radius: 999px;
+      background:#ffb3cf; color:#5c3454; text-decoration:none; font-weight:600;
+      box-shadow: 0 6px 18px rgba(244, 143, 177, .35);
+      transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 24px rgba(244, 143, 177, .45);}
+    .btn:active{ transform: translateY(0); }
+
+    /* Дребни достъпност/контраст подобрения */
+    @media (prefers-reduced-motion: reduce){
+      .petal{ animation: none; display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="petals" aria-hidden="true">
+    <!-- 18 листенца -->
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+  </div>
+
+  <main class="wrap">
+    <section class="card" role="article" aria-label="Послание за любимата">
+      <h1>За теб, любов моя</h1>
+      <div class="subtitle">Една малка страница, за да ти кажа големи неща.</div>
+
+       <p>
+        Без теб не мога — ти си всичко за мен.
+       Всяка сутрин и всяка вечер мислите ми започват и свършват c теб.
+       </p>
+
+       <p>
+       Знам, че съм допускал много грешки по пътя, но те никога не ca били от липса на любов. Просто още ce уча… да бъда по-добър човек, по-добър за теб.
+       </p>
+
+       <p>
+       Аз не ce отказвам, дори когато падам. Винаги ce изправям и продължавам, защото вярвам, че нещо истинско си заслужава борбата.
+       Искам ти да си тази, която ще ме научи да шофирам — не само за да си взема книжката, a защото искам да споделя и този малък, но важен път c теб.  
+       </p>
+       
+       <p>
+       А у дома има изненада, която се надявам да ти върне усмивката.
+       </p>
+       
+      <p>
+        Обичам те днес, утре и всеки ден след това.
+      </p>
+
+      <div class="signature">— Твоят глупчо ♥</div>
+
+      <!-- По желание: бутон към снимков албум или видео -->
+      <!-- <a class="btn" href="https://примерен-линк" target="_blank" rel="noopener">Спомени ни</a> -->
+    </section>
+  </main>
+</body>
+</html>
